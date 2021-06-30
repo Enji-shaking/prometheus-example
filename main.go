@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-gin-app/monitor"
 )
 
 var router *gin.Engine
@@ -25,6 +26,9 @@ func main() {
 	initializeRoutes()
 
 	// Start serving the application
+
+	monitor.InitProm()
+
 	router.Run()
 }
 
