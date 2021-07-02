@@ -2,30 +2,21 @@
 
 package main
 
-import "errors"
+import (
+	"errors"
 
-type article struct {
-	ID      int    `json:"id"`
-	Title   string `json:"title"`
-	Content string `json:"content"`
-}
-
-// For this demo, we're storing the article list in memory
-// In a real application, this list will most likely be fetched
-// from a database or from static files
-var articleList = []article{
-	article{ID: 1, Title: "Article 1", Content: "Article 1 body"},
-	article{ID: 2, Title: "Article 2", Content: "Article 2 body"},
-}
+	"github.com/go-gin-app/config"
+)
 
 // Return a list of all the articles
-func getAllArticles() []article {
-	return articleList
+func getAllArticles() []config.Article {
+	// return articleList
+	return config.ArticleList
 }
 
 // Fetch an article based on the ID supplied
-func getArticleByID(id int) (*article, error) {
-	for _, a := range articleList {
+func getArticleByID(id int) (*config.Article, error) {
+	for _, a := range config.ArticleList {
 		if a.ID == id {
 			return &a, nil
 		}
@@ -34,12 +25,12 @@ func getArticleByID(id int) (*article, error) {
 }
 
 // Create a new article with the title and content provided
-func createNewArticle(title, content string) (*article, error) {
+func createNewArticle(title, content string) (*config.Article, error) {
 	// Set the ID of a new article to one more than the number of articles
-	a := article{ID: len(articleList) + 1, Title: title, Content: content}
+	a := config.Article{ID: len(config.ArticleList) + 1, Title: title, Content: content}
 
 	// Add the article to the list of articles
-	articleList = append(articleList, a)
+	config.ArticleList = append(config.ArticleList, a)
 
 	return &a, nil
 }
